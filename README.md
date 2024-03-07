@@ -16,7 +16,7 @@ A quick example:
 
 ```php
 <?php
-$m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+$m = new \Mustache\Engine(array('entity_flags' => ENT_QUOTES));
 echo $m->render('Hello {{planet}}', array('planet' => 'World!')); // "Hello World!"
 ```
 
@@ -53,7 +53,7 @@ And render it:
 
 ```php
 <?php
-$m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+$m = new \Mustache\Engine(array('entity_flags' => ENT_QUOTES));
 $chris = new Chris;
 echo $m->render($template, $chris);
 ```
