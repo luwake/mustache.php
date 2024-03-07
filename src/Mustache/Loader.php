@@ -1,5 +1,7 @@
 <?php
 
+namespace Mustache;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -12,16 +14,16 @@
 /**
  * Mustache Template Loader interface.
  */
-interface Mustache_Loader
+interface Loader
 {
     /**
      * Load a Template by name.
      *
-     * @throws Mustache_Exception_UnknownTemplateException If a template file is not found
+     * @throws UnknownTemplateException If a template file is not found
      *
      * @param string $name
      *
-     * @return string|Mustache_Source Mustache Template source
+     * @return string|Source Mustache Template source
      */
     public function load($name);
 }

@@ -1,5 +1,10 @@
 <?php
 
+namespace Mustache\Loader;
+
+use Mustache\Exception\UnknownTemplateException;
+use Mustache\Source\FilesystemSource;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -16,7 +21,7 @@
  *
  * {@inheritdoc}
  */
-class Mustache_Loader_ProductionFilesystemLoader extends Mustache_Loader_FilesystemLoader
+class ProductionFilesystemLoader extends FilesystemLoader
 {
     private $statProps;
 
@@ -44,7 +49,7 @@ class Mustache_Loader_ProductionFilesystemLoader extends Mustache_Loader_Filesys
      * YOU MUST CLEAR THE TEMPLATE CACHE YOURSELF when your templates change. Make it part of your build or deploy
      * process so you don't forget!
      *
-     * @throws Mustache_Exception_RuntimeException if $baseDir does not exist.
+     * @throws RuntimeException if $baseDir does not exist.
      *
      * @param string $baseDir Base directory containing Mustache template files.
      * @param array  $options Array of Loader options (default: array())
@@ -67,20 +72,20 @@ class Mustache_Loader_ProductionFilesystemLoader extends Mustache_Loader_Filesys
     /**
      * Helper function for loading a Mustache file by name.
      *
-     * @throws Mustache_Exception_UnknownTemplateException If a template file is not found.
+     * @throws UnknownTemplateException If a template file is not found.
      *
      * @param string $name
      *
-     * @return Mustache_Source Mustache Template source
+     * @return Source Mustache Template source
      */
     protected function loadFile($name)
     {
         $fileName = $this->getFileName($name);
 
         if (!file_exists($fileName)) {
-            throw new Mustache_Exception_UnknownTemplateException($name);
+            throw new UnknownTemplateException($name);
         }
 
-        return new Mustache_Source_FilesystemSource($fileName, $this->statProps);
+        return new FilesystemSource($fileName, $this->statProps);
     }
 }

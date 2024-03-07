@@ -1,5 +1,9 @@
 <?php
 
+namespace Mustache;
+
+use Mustache\Exception\InvalidArgumentException;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -12,7 +16,7 @@
 /**
  * Mustache Template rendering Context.
  */
-class Mustache_Context
+class Context
 {
     private $stack      = array();
     private $blockStack = array();
@@ -148,9 +152,9 @@ class Mustache_Context
      * stack for the first value, rather than searching the whole context stack
      * and starting from there.
      *
-     * @see Mustache_Context::findDot
+     * @see Context::findDot
      *
-     * @throws Mustache_Exception_InvalidArgumentException if given an invalid anchored dot $id
+     * @throws InvalidArgumentException if given an invalid anchored dot $id
      *
      * @param string $id Dotted variable selector
      *
@@ -161,7 +165,7 @@ class Mustache_Context
         $chunks = explode('.', $id);
         $first  = array_shift($chunks);
         if ($first !== '') {
-            throw new Mustache_Exception_InvalidArgumentException(sprintf('Unexpected id for findAnchoredDot: %s', $id));
+            throw new InvalidArgumentException(sprintf('Unexpected id for findAnchoredDot: %s', $id));
         }
 
         $value  = $this->last();
@@ -198,7 +202,7 @@ class Mustache_Context
     /**
      * Helper function to find a variable in the Context stack.
      *
-     * @see Mustache_Context::find
+     * @see Context::find
      *
      * @param string $id    Variable name
      * @param array  $stack Context stack
@@ -212,7 +216,7 @@ class Mustache_Context
 
             switch (gettype($frame)) {
                 case 'object':
-                    if (!($frame instanceof Closure)) {
+                    if (!($frame instanceof \Closure)) {
                         // Note that is_callable() *will not work here*
                         // See https://github.com/bobthecow/mustache.php/wiki/Magic-Methods
                         if (method_exists($frame, $id)) {
@@ -223,7 +227,7 @@ class Mustache_Context
                             return $frame->$id;
                         }
 
-                        if ($frame instanceof ArrayAccess && isset($frame[$id])) {
+                        if ($frame instanceof \ArrayAccess && isset($frame[$id])) {
                             return $frame[$id];
                         }
                     }

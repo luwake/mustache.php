@@ -1,5 +1,7 @@
 <?php
 
+namespace Mustache;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -14,10 +16,10 @@
  *
  * @abstract
  */
-abstract class Mustache_Template
+abstract class Template
 {
     /**
-     * @var Mustache_Engine
+     * @var Engine
      */
     protected $mustache;
 
@@ -29,9 +31,9 @@ abstract class Mustache_Template
     /**
      * Mustache Template constructor.
      *
-     * @param Mustache_Engine $mustache
+     * @param Engine $mustache
      */
-    public function __construct(Mustache_Engine $mustache)
+    public function __construct(Engine $mustache)
     {
         $this->mustache = $mustache;
     }
@@ -39,11 +41,11 @@ abstract class Mustache_Template
     /**
      * Mustache Template instances can be treated as a function and rendered by simply calling them.
      *
-     *     $m = new Mustache_Engine;
+     *     $m = new Engine;
      *     $tpl = $m->loadTemplate('Hello, {{ name }}!');
      *     echo $tpl(array('name' => 'World')); // "Hello, World!"
      *
-     * @see Mustache_Template::render
+     * @see Template::render
      *
      * @param mixed $context Array or object rendering context (default: array())
      *
@@ -75,12 +77,12 @@ abstract class Mustache_Template
      *
      * NOTE: This method is not part of the Mustache.php public API.
      *
-     * @param Mustache_Context $context
+     * @param Context $context
      * @param string           $indent  (default: '')
      *
      * @return string Rendered template
      */
-    abstract public function renderInternal(Mustache_Context $context, $indent = '');
+    abstract public function renderInternal(Context $context, $indent = '');
 
     /**
      * Tests whether a value should be iterated over (e.g. in a section context).
@@ -115,7 +117,7 @@ abstract class Mustache_Template
     {
         switch (gettype($value)) {
             case 'object':
-                return $value instanceof Traversable;
+                return $value instanceof \Traversable;
 
             case 'array':
                 $i = 0;
@@ -139,11 +141,11 @@ abstract class Mustache_Template
      *
      * @param mixed $context Optional first context frame (default: null)
      *
-     * @return Mustache_Context
+     * @return Context
      */
     protected function prepareContextStack($context = null)
     {
-        $stack = new Mustache_Context();
+        $stack = new Context();
 
         $helpers = $this->mustache->getHelpers();
         if (!$helpers->isEmpty()) {
@@ -163,11 +165,11 @@ abstract class Mustache_Template
      * Invoke the value if it is callable, otherwise return the value.
      *
      * @param mixed            $value
-     * @param Mustache_Context $context
+     * @param Context $context
      *
      * @return string
      */
-    protected function resolveValue($value, Mustache_Context $context)
+    protected function resolveValue($value, Context $context)
     {
         if (($this->strictCallables ? is_object($value) : !is_string($value)) && is_callable($value)) {
             return $this->mustache

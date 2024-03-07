@@ -1,5 +1,7 @@
 <?php
 
+namespace Mustache;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -12,7 +14,7 @@
 /**
  * Mustache template Source interface.
  */
-interface Mustache_Source
+interface Source
 {
     /**
      * Get the Source key (used to generate the compiled class name).

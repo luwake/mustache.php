@@ -1,5 +1,9 @@
 <?php
 
+namespace Mustache\Exception;
+
+use Mustache\Exception;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -12,7 +16,7 @@
 /**
  * Unknown template exception.
  */
-class Mustache_Exception_UnknownTemplateException extends InvalidArgumentException implements Mustache_Exception
+class UnknownTemplateException extends InvalidArgumentException implements Exception
 {
     protected $templateName;
 

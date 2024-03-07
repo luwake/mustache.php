@@ -1,5 +1,9 @@
 <?php
 
+namespace Mustache\Loader;
+
+use Mustache\Loader;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -23,7 +27,7 @@
  *     $tpl = $m->loadTemplate('{{ foo }}');
  *     echo $tpl->render(array('foo' => 'bar')); // "bar"
  */
-class Mustache_Loader_StringLoader implements Mustache_Loader
+class StringLoader implements Loader
 {
     /**
      * Load a Template by source.

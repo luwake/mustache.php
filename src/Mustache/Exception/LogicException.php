@@ -1,5 +1,9 @@
 <?php
 
+namespace Mustache\Exception;
+
+use Mustache\Exception;
+
 /*
  * This file is part of Mustache.php.
  *
@@ -12,7 +16,7 @@
 /**
  * Logic exception.
  */
-class Mustache_Exception_LogicException extends LogicException implements Mustache_Exception
+class LogicException extends \LogicException implements Exception
 {
     // This space intentionally left blank.
 }

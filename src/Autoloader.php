@@ -12,7 +12,7 @@
 /**
  * Mustache class autoloader.
  */
-class Mustache_Autoloader
+class Autoloader
 {
     private $baseDir;
 
@@ -32,7 +32,7 @@ class Mustache_Autoloader
     public function __construct($baseDir = null)
     {
         if ($baseDir === null) {
-            $baseDir = dirname(__FILE__) . '/..';
+            $baseDir = dirname(__FILE__);
         }
 
         // realpath doesn't always work, for example, with stream URIs
@@ -49,7 +49,7 @@ class Mustache_Autoloader
      *
      * @param string $baseDir Mustache library base directory (default: dirname(__FILE__).'/..')
      *
-     * @return Mustache_Autoloader Registered Autoloader instance
+     * @return Autoloader Registered Autoloader instance
      */
     public static function register($baseDir = null)
     {
@@ -79,8 +79,9 @@ class Mustache_Autoloader
         if (strpos($class, 'Mustache') !== 0) {
             return;
         }
-
-        $file = sprintf('%s/%s.php', $this->baseDir, str_replace('_', '/', $class));
+        
+        $path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+        $file = $this->baseDir . '/' . $path . '.php';
         if (is_file($file)) {
             require $file;
         }
